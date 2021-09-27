@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,9 +7,9 @@ import { selectedProduct } from "../redux/actions/productActions";
 const ProductDetail = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const [isModalShown, setIsModalShown] = useState(false);
 
   const productSelected = useSelector((state) => state.selectedProduct);
+  const { image, title, price, category, description } = productSelected;
 
   const getSingleProduct = async () => {
     const res = await axios
@@ -19,30 +19,46 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    getSingleProduct();
-    setIsModalShown(true);
-  }, []);
-
-  // console.log(productSelected);
-  console.log(isModalShown);
+    if (productId && productId !== "") {
+      getSingleProduct();
+    }
+  }, [productId]);
 
   return (
     <div className="ui grid container">
-      <div className={`ui modal ${isModalShown ? "active" : null}`}>
-        <div className="header">{productSelected.title}</div>
-        <div className="image content">
-          <img
-            className="image"
-            src={productSelected.image}
-            alt={productSelected.category}
-          />
-          <div className="description">
-            <p>{productSelected.description}</p>
-            <p>${productSelected.price}</p>
-            <p>{productSelected.category}</p>
+      {selectedProduct.length === 0 ? (
+        <div class="ui segment">
+          <div class="ui active dimmer">
+            <div class="ui text loader">Loading</div>
+          </div>
+          <p></p>
+        </div>
+      ) : (
+        <div className="ui placeholder segment">
+          <div className="ui two column stackable center aligned grid">
+            {/* <div className="ui vertical divider">AND</div> */}
+            <div className="middle aligned row">
+              <div className="column lp">
+                <img className="ui fluid image" src={image} alt={title} />
+              </div>
+              <div className="column rp">
+                <h1>{title}</h1>
+                <h2>
+                  <p className="ui teal tag label">${price}</p>
+                </h2>
+                <h3 className="ui brown block header">{category}</h3>
+                <p>{description}</p>
+                <div className="ui vertical animated button" tabIndex="0">
+                  <div className="hidden content">
+                    <i className="shop icon"></i>
+                  </div>
+                  <div className="visible content">Add to Cart</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

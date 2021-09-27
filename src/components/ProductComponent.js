@@ -1,18 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { selectedProduct } from "../redux/actions/productActions";
 
 const ProductComponent = () => {
   const products = useSelector((state) => state.allProducts.products);
-  const dispatch = useDispatch();
-
-  //trying to get selected product to dispatch in redux.
-
-  const productSelection = (product) => {
-    dispatch(selectedProduct(product));
-  };
 
   const renderList = products.map((product) => {
     return (
