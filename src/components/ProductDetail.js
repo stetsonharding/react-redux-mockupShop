@@ -27,7 +27,7 @@ const ProductDetail = () => {
     }
 
     return function cleanup() {
-      dispatch(removeSelectedProduct(selectedProduct));
+      dispatch(removeSelectedProduct());
     };
   }, [productId]);
 
