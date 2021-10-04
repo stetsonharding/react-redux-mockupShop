@@ -14,6 +14,7 @@ const ProductDetail = () => {
   const productSelected = useSelector((state) => state.selectedProduct);
   const { image, title, price, category, description } = productSelected;
 
+  //get single product and dispatch
   const getSingleProduct = async () => {
     const res = await axios
       .get(`https://fakestoreapi.com/products/${productId}`)
