@@ -61,6 +61,7 @@ const ProductDetail = () => {
                     <i className="shop icon"></i>
                   </div>
                   <div className="visible content">Add to Cart</div>
+                  {/* Shopping cart button add here. */}
                 </div>
               </div>
             </div>
